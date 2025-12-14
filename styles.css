@@ -82,8 +82,6 @@ header nav ul li:hover::after {
     filter: blur(50px);
 }
 
-
-
 @keyframes pulse {
     0% {
         transform: translate(-50%, -50%) scale(0.8);
@@ -103,34 +101,27 @@ header nav ul li:hover::after {
     position: relative;
 }
 
-.list {
-    width: 80%;
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-}
-
-/* Slides */
 .item {
     position: absolute;
     inset: 0;
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 60px; 
+    gap: 60px;
     padding: 20px;
-    opacity: 0;          
-    pointer-events: none; 
-    transition: opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100vw);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
 
 .item.active {
-    opacity: 1;           
-    pointer-events: auto; /
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
 }
-
 
 .product-img {
     width: 500px;
@@ -144,8 +135,18 @@ header nav ul li:hover::after {
     width: 90%;
     height: auto;
     filter: drop-shadow(0 0 30px rgba(0, 247, 255, 0.3));
+
+    /*Animação*/
+    transform: translateX(200vw);
+    opacity: 0;
+    transition: transform 1s ease, opacity 1s ease;
+    transition-delay: 0.3s; 
 }
 
+.item.active .product-img img {
+    transform: translateX(0);
+    opacity: 1;
+}
 
 .content {
     width: 50%;
@@ -163,6 +164,17 @@ header nav ul li:hover::after {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
+
+  /*Animação*/
+    transform: translateX(200vw);
+    opacity: 0;
+    transition: transform 0.9s ease, opacity 0.9s ease;
+    transition-delay: 0.3s; 
+}
+
+.item.active .product-tag {
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .product-name {
@@ -170,6 +182,17 @@ header nav ul li:hover::after {
     font-family: "Orbitron", sans-serif;
     line-height: 1.1;
     margin-bottom: 20px;
+
+    /*Animação*/
+    transform: translateX(200vw);
+    opacity: 0;
+    transition: transform 1s ease, opacity 1s ease;
+    transition-delay: 0.2s; 
+}
+
+.item.active .product-name {
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .description {
@@ -178,8 +201,18 @@ header nav ul li:hover::after {
     color: #b8b8d0;
     max-width: 400px;
     margin-bottom: 30px;
+
+    /*Animação*/
+    transform: translateX(200vw);
+    opacity: 0;
+    transition: transform 0.9s ease;
+    transition-delay: 0.3s; 
 }
 
+.active .description {
+    transform: translateX(0);
+    opacity: 1;
+}
 
 .btn {
     position: relative;
@@ -191,14 +224,16 @@ header nav ul li:hover::after {
     cursor: pointer;
     border: none;
     overflow: hidden;
-    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: background 0.9s ease, color 0.9s ease, box-shadow 0.9s ease, transform 0.3s ease;
+  
 }
 
+
 .item.active .btn:hover {
-    background: linear-gradient(90deg, #00dfff, #0044ff); 
-    color: #ffffff; 
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5); 
-    transform: scale(1.05); 
+    background: linear-gradient(90deg, #00dfff, #0044ff);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5);
+    transform: scale(1.05);
 }
 
 .arrows {
@@ -217,9 +252,9 @@ header nav ul li:hover::after {
     height: 50px;
     border-radius: 30px;
     cursor: pointer;
-    background: rgba(0, 247, 255, 0.2); 
+    background: rgba(0, 247, 255, 0.2);
     border: 1px solid rgba(0, 247, 255, 0.5);
-    color: #00f7ff; 
+    color: #00f7ff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,10 +262,88 @@ header nav ul li:hover::after {
     transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-
 .arrow-btn:hover {
-    background: linear-gradient(90deg, #00dfff, #0044ff); 
+    background: linear-gradient(90deg, #00dfff, #0044ff);
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.5);
     transform: scale(1.1);
     color: #fff;
+}
+
+.indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.numbers {
+    font-family: "Orbitron", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background-color: transparent;
+}
+
+.dots {
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dot.active {
+    background-color: #00f7ff;
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+}
+
+.tech-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 247, 255, 0.2);
+}
+
+.circle:nth-child(1) {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 10%;
+}
+
+.circle:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    top: 60%;
+    left: 80%;
+}
+
+.circle:nth-child(3) {
+    width: 150px;
+    height: 150px;
+    top: 70%;
+    left: 20%;
+}
+
+.circle:nth-child(4) {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    left: 70%;
 }
